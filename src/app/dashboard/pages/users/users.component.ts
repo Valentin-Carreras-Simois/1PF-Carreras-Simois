@@ -2,23 +2,9 @@ import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { UserFromDialogComponent } from './components/user-from-dialog/user-from-dialog.component';
 import { User } from './models';
-
-const ELEMENT_DATA: User[] = [
-  {
-    id:1,
-    name: 'Vicente',
-    surname: 'Carreras',
-    email: 'vicentecs@gmail.com',
-    password: 'jejejejijiji'
-  },
-  {
-    id:2,
-    name: 'Alejandra',
-    surname: 'Simois',
-    email: 'alejandrasimua@gmail.com',
-    password: 'jojojojujuju'
-  }
-];
+import { UserService } from './user.service';
+import { NotifierService } from 'src/app/core/services/notifier.service';
+import { Observable, Subject, map, tap } from 'rxjs';
 
 
 @Component({
@@ -28,9 +14,25 @@ const ELEMENT_DATA: User[] = [
 })
 export class UsersComponent {
 
-  public users: User[]= ELEMENT_DATA;
+  public users: Observable<User[]>;
 
-  constructor(private matDialog: MatDialog){}
+  constructor(
+    private matDialog: MatDialog,
+    private userService: UserService ,
+    private notifier: NotifierService,
+    ){
+      this.userService.loadUsers();
+      this.users = this.userService.getUsers().pipe(
+        map((valor) => 
+          valor.map((usuario) => ({
+            ...usuario,
+            name: usuario.name.toUpperCase(),
+            surname:usuario.surname.toUpperCase(),
+          }))
+        )
+      );
+      
+    }
 
   onCreateUser(): void{
     const dialogRef = this.matDialog.open(UserFromDialogComponent);
@@ -38,17 +40,15 @@ export class UsersComponent {
     dialogRef.afterClosed().subscribe({
       next: (v)=>{
         if (v) {
-          this.users=[
-            ...this.users,
-            {
-              id: this.users.length + 1,
+        this.notifier.showSuccess('Se cargo el usuario correctamente');
+        this.userService.createUser({
               name: v.name,
               surname: v.surname,
               email: v.email,
               password: v.password
-            },
-          ];
+        });  
         }else{
+
         }
         }
     });
@@ -56,7 +56,8 @@ export class UsersComponent {
 
   onDeleteUser(userToDelete:User):void{
     if (confirm(`¿Esta seguro de querer eliminar a ${userToDelete.name}?`)) {
-      this.users = this.users.filter((u) => u.id !== userToDelete.id);
+      this.userService.deleteUserById(userToDelete.id);
+      this.notifier.showError('Usuario eliminado');
     }
   }
 
@@ -69,9 +70,8 @@ export class UsersComponent {
     .subscribe({
       next: (userUpdated)=>{
         if (userUpdated) {
-          this.users=this.users.map((user)=>{
-            return user.id === userToEdit.id ?{...user, ...userUpdated} : user;
-          })
+          this.userService.updateUserById(userToEdit.id, userUpdated);
+          this.notifier.showInfo('Se actualizo la informacion correctamente');
         }
         }
     })

@@ -10,6 +10,7 @@ import { User } from '../../models';
   styleUrls: ['./user-from-dialog.component.scss']
 })
 export class UserFromDialogComponent {
+  editingUser?:User;
   nameControl= new FormControl<string | null>(null,[Validators.required, Validators.minLength(3)]);
   surnameControl = new FormControl<string | null>(null, [Validators.required]);
   emailControl = new FormControl<string | null>(null, [Validators.required, noHotmailValidator()]);
@@ -23,10 +24,12 @@ export class UserFromDialogComponent {
     password: this.passwordControl
   });
 
-  constructor(private dialogRef: MatDialogRef<UserFromDialogComponent>,
+  constructor(
+    private dialogRef: MatDialogRef<UserFromDialogComponent>,
     @Inject(MAT_DIALOG_DATA) private data?: User,
     ){
       if (this.data) {
+        this.editingUser = this.data;
         this.nameControl.setValue(this.data.name),
         this.surnameControl.setValue(this.data.surname),
         this.emailControl.setValue(this.data.email),

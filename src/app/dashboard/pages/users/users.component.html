@@ -9,4 +9,7 @@
     <h2 appResaltado>Usuarios</h2>
 </div>
 
-<app-users-table [dataSource]="users" (deleteUser)="onDeleteUser($event)" (editUser)="onEditUser($event)"></app-users-table>
+<app-users-table [dataSource]="(users|async) || []" 
+(deleteUser)="onDeleteUser($event)" 
+(editUser)="onEditUser($event)"
+></app-users-table>
