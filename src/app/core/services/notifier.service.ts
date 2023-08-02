@@ -32,7 +32,7 @@ export class NotifierService {
   }
   showError(message:string, title = 'Eliminado'):void{
     this.notifier$.next({
-      type:'error',
+      type:'success',
       message,
       title
     });

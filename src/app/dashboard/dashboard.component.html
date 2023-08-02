@@ -1,18 +1,12 @@
 <mat-drawer-container class="example-container" autosize>
-    <mat-drawer mode="over" #drawer class="example-sidenav" mode="side">
-
+    <mat-drawer opened mode="over" #drawer class="example-sidenav" mode="side">
+        <app-nav-menu></app-nav-menu>
     </mat-drawer>
 
     <div class="example-sidenav-content">
-        <mat-toolbar color="primary">
-            <button (click)="drawer.toggle()" mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
-            <mat-icon>menu</mat-icon>
-            </button>
-            <span>Proyecto Final</span>
-        </mat-toolbar>
+        <app-toolbar [drawer]="drawer"></app-toolbar>
         <main>
-            <!-- <app-home></app-home> -->
-            <app-users></app-users>
+            <router-outlet></router-outlet>
         </main>
     </div>
 </mat-drawer-container>

@@ -1,12 +1,10 @@
+<h1>Usuarios</h1>
+
 <div class="mb-5">
     <button (click)="onCreateUser()" mat-raised-button color="primary" type="button">
         <mat-icon>add</mat-icon>
         Crear Usuario
     </button>
-</div>
-
-<div>
-    <h2 appResaltado>Usuarios</h2>
 </div>
 
 <app-users-table [dataSource]="(users|async) || []" 

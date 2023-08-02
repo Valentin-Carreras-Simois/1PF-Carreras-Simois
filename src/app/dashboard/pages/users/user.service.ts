@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CreateUserData, UpdateUserData, User } from './models';
-import { BehaviorSubject, Observable, Subject, delay, of, take } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, delay, map, of, take } from 'rxjs';
 
 const USER_DB: Observable<User[]> = of([
   {
@@ -41,6 +41,12 @@ export class UserService {
 
   getUsers(): Observable<User[]>{
     return this.users$;
+  }
+
+  getUserById(id:number): Observable <User | undefined> {
+    return this.users$.pipe(
+      map((users) => users.find((u) => u.id === id))
+      )
   }
 
   createUser(user:CreateUserData):void{

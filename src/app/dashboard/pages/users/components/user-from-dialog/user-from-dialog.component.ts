@@ -5,7 +5,7 @@ import { noHotmailValidator } from 'src/app/shared/utils/form-validators';
 import { User } from '../../models';
 
 @Component({
-  selector: 'app-user-from-dialog',
+  selector: 'app-user-form-dialog',
   templateUrl: './user-from-dialog.component.html',
   styleUrls: ['./user-from-dialog.component.scss']
 })
