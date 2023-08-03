@@ -1,0 +1,22 @@
+<button routerLink=".." mat-icon-button>
+    <mat-icon>arrow_back</mat-icon>
+</button>
+
+<mat-card>
+  <mat-card-content>
+    <div *ngIf="course">
+      <h2>Detalles del Curso</h2>
+      <p><strong>Nombre:</strong> {{ course.name }}</p>
+      <p><strong>Modalidad:</strong> {{ course.modality }}</p>
+      <p><strong>Profesor:</strong> {{ course.proffessor }}</p>
+    </div>
+  </mat-card-content>
+</mat-card>
+
+<mat-card>
+  <mat-card-content>
+    <div *ngIf="!course">
+      Usuario no encontrado!
+    </div>
+  </mat-card-content>
+</mat-card>

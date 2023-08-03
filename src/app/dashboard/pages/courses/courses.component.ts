@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Course } from './models';
 import { CourseService } from './course.service';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
+import { NotifierService } from 'src/app/core/services/notifier.service';
+import { MatDialog } from '@angular/material/dialog';
+import { CoursesFormDialogComponent } from './components/courses-form-dialog/courses-form-dialog.component';
 
 @Component({
   selector: 'app-courses',
@@ -9,27 +12,67 @@ import { Observable } from 'rxjs';
   styles: [
   ]
 })
-export class CoursesComponent implements OnInit {
-  public dataSource: Course[]= [];
+export class CoursesComponent {
+  
+  public courses: Observable<Course[]>;
 
-  public data$: Observable <Course[]>;
+  constructor(
+    private matDialog: MatDialog,
+    private courseService: CourseService ,
+    private notifier: NotifierService,
+    ){
+      this.courseService.loadCourses();
+      this.courses = this.courseService.getCourses().pipe(
+        map((valor) => 
+          valor.map((curso) => ({
+            ...curso,
+            name: curso.name.toUpperCase(),
+            modality:curso.modality.toUpperCase(),
+          }))
+        )
+      );
+      
+    }
 
-  public displayedColumns = ['id', 'name', 'modality', 'proffessor', 'actions'];
+  onCreateCourse(): void{
+    const dialogRef = this.matDialog.open(CoursesFormDialogComponent);
 
-  constructor(private courseService: CourseService){
-    this.data$ = this.courseService.getCourses();
+    dialogRef.afterClosed().subscribe({
+      next: (v)=>{
+        if (v) {
+        this.notifier.showSuccess('Se cargo el curso correctamente');
+        this.courseService.createCourse({
+              name: v.name,
+              modality: v.modality,
+              proffessor: v.proffessor
+        });  
+        }else{
+
+        }
+        }
+    });
   }
 
-  ngOnInit(): void {
-    this.courseService.loadCourses();
-    this.courseService.getCourses().subscribe();
+  onDeleteCourse(courseToDelete:Course):void{
+    if (confirm(`¿Esta seguro de querer eliminar a ${courseToDelete.name}?`)) {
+      this.courseService.deleteCourseById(courseToDelete.id);
+      this.notifier.showError('Curso eliminado');
+    }
   }
 
-  onCreate():void{
-    this.courseService.create();
-  }
-
-  onDelete(id:number):void{
-    this.courseService.deleteById(id);
+  onEditCourse(courseToEdit:Course):void{
+    this.matDialog.open(CoursesFormDialogComponent,
+      {
+        data:courseToEdit
+      })
+    .afterClosed()
+    .subscribe({
+      next: (courseUpdated)=>{
+        if (courseUpdated) {
+          this.courseService.updateCourseById(courseToEdit.id, courseUpdated);
+          this.notifier.showInfo('Se actualizo la informacion correctamente');
+        }
+        }
+    })
   }
 }

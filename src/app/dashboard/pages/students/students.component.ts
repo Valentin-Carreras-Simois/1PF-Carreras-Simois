@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { Student } from './models';
 import { StudentService } from './student.service';
+import { MatDialog } from '@angular/material/dialog';
+import { NotifierService } from 'src/app/core/services/notifier.service';
+import { StudentFormDialogComponent } from './components/student-form-dialog/student-form-dialog.component';
 
 @Component({
   selector: 'app-students',
@@ -9,29 +12,68 @@ import { StudentService } from './student.service';
   styles: [
   ]
 })
-export class StudentsComponent implements OnInit {
+export class StudentsComponent {
 
-  public dataSource: Student[]= [];
+  public students: Observable<Student[]>;
 
-  public data$: Observable <Student[]>;
+  constructor(
+    private matDialog: MatDialog,
+    private studentService: StudentService ,
+    private notifier: NotifierService,
+    ){
+      this.studentService.loadStudents();
+      this.students = this.studentService.getStudents().pipe(
+        map((valor) => 
+          valor.map((estudiante) => ({
+            ...estudiante,
+            name: estudiante.name.toUpperCase(),
+            surname:estudiante.surname.toUpperCase(),
+          }))
+        )
+      );
+      
+    }
 
-  public displayedColumns = ['id', 'name', 'surname', 'age', 'actions'];
+  onCreateStudent(): void{
+    const dialogRef = this.matDialog.open(StudentFormDialogComponent);
 
-  constructor(private studentService: StudentService){
-    this.data$ = this.studentService.getStudents();
+    dialogRef.afterClosed().subscribe({
+      next: (v)=>{
+        if (v) {
+        this.notifier.showSuccess('Se cargo el alumno correctamente');
+        this.studentService.createStudent({
+              name: v.name,
+              surname: v.surname,
+              turno: v.turno
+        });  
+        }else{
+
+        }
+        }
+    });
   }
 
-  ngOnInit(): void {
-    this.studentService.loadStudents();
-    this.studentService.getStudents().subscribe();
+  onDeleteStudent(studentToDelete:Student):void{
+    if (confirm(`¿Esta seguro de querer eliminar a ${studentToDelete.name}?`)) {
+      this.studentService.deleteStudentById(studentToDelete.id);
+      this.notifier.showError('Alumno eliminado');
+    }
   }
 
-  onCreate():void{
-    this.studentService.create();
-  }
-
-  onDelete(id:number):void{
-    this.studentService.deleteById(id);
+  onEditStudent(studentToEdit:Student):void{
+    this.matDialog.open(StudentFormDialogComponent,
+      {
+        data:studentToEdit
+      })
+    .afterClosed()
+    .subscribe({
+      next: (studentUpdated)=>{
+        if (studentUpdated) {
+          this.studentService.updateStudentById(studentToEdit.id, studentUpdated);
+          this.notifier.showInfo('Se actualizo la informacion correctamente');
+        }
+        }
+    })
   }
 
 }

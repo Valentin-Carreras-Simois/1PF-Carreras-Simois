@@ -11,12 +11,15 @@ import { RouterModule } from '@angular/router';
 import { MatListModule } from '@angular/material/list';
 import { NavMenuComponent } from './layout/nav-menu/nav-menu.component';
 import { ToolbarComponent } from './layout/toolbar/toolbar.component';
+import { CoursesModule } from './pages/courses/courses.module';
+import { StudentsModule } from './pages/students/students.module';
+import { DashboardRoutingModule } from './dashboard-routing.module';
 
 
 
 @NgModule({
   declarations: [
-    DashboardComponent, NavMenuComponent, ToolbarComponent
+    DashboardComponent, NavMenuComponent, ToolbarComponent,
   ],
   imports: [
     CommonModule,
@@ -26,8 +29,11 @@ import { ToolbarComponent } from './layout/toolbar/toolbar.component';
     MatIconModule,
     HomeModule,
     UsersModule,
+    CoursesModule,
+    StudentsModule,
     RouterModule,
     MatListModule,
+    DashboardRoutingModule
   ],
   exports: [
     DashboardComponent

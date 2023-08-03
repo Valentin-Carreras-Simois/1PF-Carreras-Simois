@@ -1,46 +1,16 @@
 <h1>Cursos</h1>
 
 <div class="mb-5">
-  <button (click)="onCreate()" mat-flat-button color="primary" type="button">
-    <mat-icon>add</mat-icon>
-    Crear Curso
-  </button>
-  
+    <button (click)="onCreateCourse()" mat-raised-button color="primary" type="button">
+        <mat-icon>add</mat-icon>
+        Crear Curso
+    </button>
 </div>
 
-<table mat-table [dataSource]="(data$ | async) || []" class="border border-light-subtle mat-elevation-z8">
+<app-courses-table [dataSource]="(courses|async) || []" 
+(deleteCourse)="onDeleteCourse($event)" 
+(editCourse)="onEditCourse($event)"
+></app-courses-table>
 
-    <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef><span appResaltado>ID</span></th>
-      <td mat-cell *matCellDef="let course"> {{course.id}} </td>
-    </ng-container>
 
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef><span appResaltado>Curso</span></th>
-      <td mat-cell *matCellDef="let course"> {{course.name}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="modality">
-      <th mat-header-cell *matHeaderCellDef><span appResaltado>Modalidad</span></th>
-      <td mat-cell *matCellDef="let course"> {{course.modality}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="proffessor">
-      <th mat-header-cell *matHeaderCellDef><span appResaltado>Docente</span></th>
-      <td mat-cell *matCellDef="let course"> {{course.proffessor}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="actions">
-      <th mat-header-cell *matHeaderCellDef><span appResaltado>Acciones</span></th>
-      <td mat-cell *matCellDef="let course">
-        <button (click)="onDelete(course.id)" mat-icon-button color="warn">
-          <mat-icon>delete</mat-icon>
-        </button>
-
-      </td>
-    </ng-container>
-  
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
     

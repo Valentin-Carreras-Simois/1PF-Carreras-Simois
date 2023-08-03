@@ -9,64 +9,23 @@ import { LoginComponent } from './auth/pages/login/login.component';
 import { RegisterComponent } from './auth/pages/register/register.component';
 import { CoursesComponent } from './dashboard/pages/courses/courses.component';
 import { StudentsComponent } from './dashboard/pages/students/students.component';
+import { CourseDetailComponent } from './dashboard/pages/courses/pages/course-detail/course-detail.component';
+import { StudentDetailComponent } from './dashboard/pages/students/pages/student-detail/student-detail.component';
 
 const routes: Routes = [
   {
     path: 'dashboard',
     component: DashboardComponent,
-    children:[
-      {
-        path: 'home',
-        component: HomeComponent
-      },
-      {
-        path: 'users',
-        children: [
-          {
-            path: '',
-            component: UsersComponent
-          },
-          {
-            path: ':id',
-            component: UserDetailComponent
-          }
-        ]
-      },
-      {
-        path: 'courses',
-        component: CoursesComponent
-      },
-      {
-        path: 'students',
-        component: StudentsComponent
-      },
-      {
-        path: '**',
-        redirectTo: 'home'
-      }
-    ]
+    loadChildren: () => import('./dashboard/dashboard.module').then((m) => m.DashboardModule)
   },
   {
     path: 'auth',
     component: AuthComponent,
-    children:[
-      {
-        path:'login',
-        component: LoginComponent
-      },
-      {
-        path: 'register',
-        component: RegisterComponent
-      },
-      {
-        path: '**',
-        redirectTo: 'login'
-      }
-    ]
+    loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule)
   },
   {
     path: '**',
-    redirectTo: '/auth'
+    redirectTo: '/auth/login'
   }
 ];
 
