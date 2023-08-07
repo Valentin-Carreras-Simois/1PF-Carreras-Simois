@@ -6,6 +6,7 @@ import { CoursesFormDialogComponent } from './components/courses-form-dialog/cou
 import { RouterModule } from '@angular/router';
 import { CoursesTableComponent } from './components/courses-table/courses-table.component';
 import { CourseDetailComponent } from './pages/course-detail/course-detail.component';
+import { CoursesRoutingModule } from './courses-routing.module';
 
 
 
@@ -19,7 +20,8 @@ import { CourseDetailComponent } from './pages/course-detail/course-detail.compo
   imports: [
     CommonModule,
     SharedModule,
-    RouterModule
+    RouterModule,
+    CoursesRoutingModule
   ],
   exports:[
     CoursesComponent

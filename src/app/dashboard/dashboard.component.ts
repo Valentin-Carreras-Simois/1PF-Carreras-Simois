@@ -16,4 +16,6 @@ export class DashboardComponent {
 
   showFiller = false;
 
+  showPage = true;
+
 }
