@@ -15,6 +15,7 @@ import { CoursesFormDialogComponent } from './components/courses-form-dialog/cou
 export class CoursesComponent {
   
   public courses: Observable<Course[]>;
+  public isLoading$: Observable<boolean>;
 
   constructor(
     private matDialog: MatDialog,
@@ -22,6 +23,7 @@ export class CoursesComponent {
     private notifier: NotifierService,
     ){
       this.courseService.loadCourses();
+      this.isLoading$ = this.courseService.isLoading$;
       this.courses = this.courseService.getCourses().pipe(
         map((valor) => 
           valor.map((curso) => ({
@@ -56,7 +58,7 @@ export class CoursesComponent {
   onDeleteCourse(courseToDelete:Course):void{
     if (confirm(`¿Esta seguro de querer eliminar a ${courseToDelete.name}?`)) {
       this.courseService.deleteCourseById(courseToDelete.id);
-      this.notifier.showError('Curso eliminado');
+      this.notifier.showSuccess('Curso eliminado');
     }
   }
 

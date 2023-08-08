@@ -15,6 +15,7 @@ import { Observable, Subject, map, tap } from 'rxjs';
 export class UsersComponent {
 
   public users: Observable<User[]>;
+  public isLoading$: Observable<boolean>;
 
   constructor(
     private matDialog: MatDialog,
@@ -22,6 +23,7 @@ export class UsersComponent {
     private notifier: NotifierService,
     ){
       this.userService.loadUsers();
+      this.isLoading$ = this.userService.isLoading$;
       this.users = this.userService.getUsers().pipe(
         map((valor) => 
           valor.map((usuario) => ({
@@ -57,7 +59,7 @@ export class UsersComponent {
   onDeleteUser(userToDelete:User):void{
     if (confirm(`¿Esta seguro de querer eliminar a ${userToDelete.name}?`)) {
       this.userService.deleteUserById(userToDelete.id);
-      this.notifier.showError('Usuario eliminado');
+      this.notifier.showSuccess('Usuario eliminado');
     }
   }
 

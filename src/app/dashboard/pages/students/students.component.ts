@@ -15,6 +15,7 @@ import { StudentFormDialogComponent } from './components/student-form-dialog/stu
 export class StudentsComponent {
 
   public students: Observable<Student[]>;
+  public isLoading$: Observable<boolean>;
 
   constructor(
     private matDialog: MatDialog,
@@ -22,6 +23,7 @@ export class StudentsComponent {
     private notifier: NotifierService,
     ){
       this.studentService.loadStudents();
+      this.isLoading$ = this.studentService.isLoading$;
       this.students = this.studentService.getStudents().pipe(
         map((valor) => 
           valor.map((estudiante) => ({
@@ -56,7 +58,7 @@ export class StudentsComponent {
   onDeleteStudent(studentToDelete:Student):void{
     if (confirm(`¿Esta seguro de querer eliminar a ${studentToDelete.name}?`)) {
       this.studentService.deleteStudentById(studentToDelete.id);
-      this.notifier.showError('Alumno eliminado');
+      this.notifier.showSuccess('Alumno eliminado');
     }
   }
 

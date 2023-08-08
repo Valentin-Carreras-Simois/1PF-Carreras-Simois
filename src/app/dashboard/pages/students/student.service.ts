@@ -1,27 +1,8 @@
 import { Injectable } from '@angular/core';
 import { CreateStudentData, Student, UpdateStudentData } from './models';
-import { BehaviorSubject, Observable, Subject, delay, map, of, take } from 'rxjs';
-
-const STUDENT_DB: Observable<Student[]> = of([
-  {
-    id:1,
-    name: 'Agustina',
-    surname: 'Noceto',
-    turno: 'Tarde'
-  },
-  {
-    id:2,
-    name: 'Valentin',
-    surname: 'Carreras Simois',
-    turno: 'Noche'
-  },
-  {
-    id:3,
-    name: 'Mauricio',
-    surname: 'Andreu',
-    turno: 'Tarde'
-  }
-]).pipe(delay(1000));
+import { BehaviorSubject, Observable, Subject, delay, map, mergeMap, of, take } from 'rxjs';
+import { NotifierService } from 'src/app/core/services/notifier.service';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -29,17 +10,34 @@ const STUDENT_DB: Observable<Student[]> = of([
 
 export class StudentService {
 
-  private subjectStudents$ = new Subject<Student[]>();
-
   private _students$ = new BehaviorSubject<Student[]>([]);
   private students$ = this._students$.asObservable();
 
+  private _isLoading$ = new BehaviorSubject(false);
+  public isLoading$ = this._isLoading$.asObservable();
 
-  constructor() { }
+  constructor(private notifier: NotifierService, private httpClient: HttpClient) { }
 
   loadStudents():void{
-    STUDENT_DB.subscribe({
-      next: (usuariosfromDb) => this._students$.next(usuariosfromDb)
+    this._isLoading$.next(true);
+    this.httpClient.get<Student[]>('http://localhost:3000/students', {
+      headers: new HttpHeaders({
+        'token': '123456789'
+      }),
+      params: {
+        page: 1,
+        limit: 50
+      }
+    }).subscribe({
+      next: (response) => {
+        this._students$.next(response);
+      },
+      error: () => {
+        this.notifier.showError('Error al cargar los alumnos. Vuelve a intentarlo mas tarde.')
+      },
+      complete: () => {
+        this._isLoading$.next(false);
+      }
     })
   }
 
@@ -54,32 +52,33 @@ export class StudentService {
       )
   }
 
-  createStudent(student:CreateStudentData):void{
-    this.students$.pipe(take(1)).subscribe({
-      next: (arrayActual) =>{
-        this._students$.next([
-          ...arrayActual,
-          {...student, id: arrayActual.length + 1}
-        ]);
-      }
+  createStudent(payLoad:CreateStudentData):void{
+    this.httpClient.post<Student>('http://localhost:3000/students', payLoad)
+    .pipe(
+      mergeMap((studentCreated) => this._students$.pipe(
+        take(1),
+        map((arrayActual) => [...arrayActual, studentCreated])
+        )
+      )
+    )
+    .subscribe({
+      next: (arrayActualizado) => {
+        this._students$.next(arrayActualizado)
+      },
     })
   }
 
   updateStudentById(id:number, estudianteActualizado:UpdateStudentData):void{
-    this.students$.pipe(take(1)).subscribe({
-      next: (arrayActual) =>{
-        this._students$.next(
-          arrayActual.map((s) => s.id === id ? {...s, ...estudianteActualizado}: s)
-        )
-      }
+    this.httpClient.put('http://localhost:3000/students/' + id, estudianteActualizado).subscribe({
+      next: () => this.loadStudents(),
     })
   }
 
   deleteStudentById(id:number):void{
-    this.students$.pipe(take(1)).subscribe({
-      next: (arrayActual) => {
-        this._students$.next(arrayActual.filter((s) => s.id !== id))
-      }
+    this.httpClient.delete('http://localhost:3000/students/' + id)
+    .pipe()
+    .subscribe({
+      next: (arrayActualizado) => this.loadStudents(),
     })
   }
 }

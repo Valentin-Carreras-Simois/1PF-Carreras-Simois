@@ -1,0 +1,27 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Fake",
+      "surname": "User",
+      "email": "fakemail@fake.com",
+      "password": "123456"
+    }
+  ],
+  "courses": [
+    {
+      "id": 1,
+      "name": "Curso de Angular",
+      "modality": "Virtual",
+      "proffessor": "Lionel Messi"
+    }
+  ],
+  "students": [
+    {
+      "id": 1,
+      "name": "Enzo",
+      "surname": "Fernandez",
+      "turno": "Tarde"
+    }
+  ]
+}

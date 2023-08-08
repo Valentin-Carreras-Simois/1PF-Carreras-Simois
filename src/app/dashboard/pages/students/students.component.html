@@ -7,8 +7,13 @@
     </button>
 </div>
 
-<app-students-table [dataSource]="(students|async) || []" 
-(deleteStudent)="onDeleteStudent($event)" 
-(editStudent)="onEditStudent($event)"
-></app-students-table>
+<div *ngIf="isLoading$ | async; else notLoadingTemplate">Esta Cargando...</div>
+
+<ng-template #notLoadingTemplate>
+    <app-students-table [dataSource]="(students|async) || []" 
+    (deleteStudent)="onDeleteStudent($event)" 
+    (editStudent)="onEditStudent($event)"
+    ></app-students-table>
+</ng-template>
+
     

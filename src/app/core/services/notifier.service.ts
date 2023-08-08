@@ -30,9 +30,9 @@ export class NotifierService {
       title
     });
   }
-  showError(message:string, title = 'Eliminado'):void{
+  showError(message:string, title = 'Error'):void{
     this.notifier$.next({
-      type:'success',
+      type:'error',
       message,
       title
     });

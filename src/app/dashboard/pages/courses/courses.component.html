@@ -7,10 +7,15 @@
     </button>
 </div>
 
-<app-courses-table [dataSource]="(courses|async) || []" 
-(deleteCourse)="onDeleteCourse($event)" 
-(editCourse)="onEditCourse($event)"
-></app-courses-table>
+<div *ngIf="isLoading$ | async; else notLoadingTemplate">Esta Cargando...</div>
+
+<ng-template #notLoadingTemplate>
+    <app-courses-table [dataSource]="(courses|async) || []" 
+    (deleteCourse)="onDeleteCourse($event)" 
+    (editCourse)="onEditCourse($event)"
+    ></app-courses-table>
+</ng-template>
+
 
 
     
