@@ -3,6 +3,7 @@ import { BehaviorSubject, Observable, Subject, delay, map, mergeMap, of, take } 
 import { Course, CreateCourseData, UpdateCourseData } from './models';
 import { NotifierService } from 'src/app/core/services/notifier.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,7 @@ export class CourseService {
 
   loadCourses():void{
     this._isLoading$.next(true);
-    this.httpClient.get<Course[]>('http://localhost:3000/courses', {
+    this.httpClient.get<Course[]>(environment.baseApiUrl + '/courses', {
       headers: new HttpHeaders({
         'token': '123456789'
       }),
@@ -53,7 +54,7 @@ export class CourseService {
   }
 
   createCourse(payLoad:CreateCourseData):void{
-    this.httpClient.post<Course>('http://localhost:3000/courses', payLoad)
+    this.httpClient.post<Course>(environment.baseApiUrl + '/courses', payLoad)
     .pipe(
       mergeMap((courseCreated) => this._courses$.pipe(
         take(1),
@@ -69,13 +70,13 @@ export class CourseService {
   }
 
   updateCourseById(id:number, cursoActualizado:UpdateCourseData):void{
-    this.httpClient.put('http://localhost:3000/courses/' + id, cursoActualizado).subscribe({
+    this.httpClient.put(environment.baseApiUrl + '/courses/' + id, cursoActualizado).subscribe({
       next: () => this.loadCourses(),
     })
   }
 
   deleteCourseById(id:number):void{
-    this.httpClient.delete('http://localhost:3000/courses/' + id)
+    this.httpClient.delete(environment.baseApiUrl + '/courses/' + id)
     .pipe()
     .subscribe({
       next: (arrayActualizado) => this.loadCourses(),

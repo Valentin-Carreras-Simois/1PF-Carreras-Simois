@@ -4,7 +4,7 @@ import { UserFromDialogComponent } from './components/user-from-dialog/user-from
 import { User } from './models';
 import { UserService } from './user.service';
 import { NotifierService } from 'src/app/core/services/notifier.service';
-import { Observable, Subject, map, tap } from 'rxjs';
+import { Observable, map } from 'rxjs';
 
 
 @Component({

@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { CreateUserData, UpdateUserData, User } from './models';
-import { BehaviorSubject, Observable, delay, map, mergeMap, of, take } from 'rxjs';
+import { BehaviorSubject, Observable, map, mergeMap, take } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { NotifierService } from 'src/app/core/services/notifier.service';
+import { generateRandomString } from 'src/app/shared/utils/helpers';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +21,7 @@ export class UserService {
 
   loadUsers():void{
     this._isLoading$.next(true);
-    this.httpClient.get<User[]>('http://localhost:3000/users', {
+    this.httpClient.get<User[]>(environment.baseApiUrl + '/users', {
       headers: new HttpHeaders({
         'token': '123456789'
       }),
@@ -52,7 +54,10 @@ export class UserService {
   }
 
   createUser(payLoad:CreateUserData):void{
-    this.httpClient.post<User>('http://localhost:3000/users', payLoad)
+
+    const token = generateRandomString(10);
+
+    this.httpClient.post<User>(environment.baseApiUrl + '/users', {...payLoad, token})
     .pipe(
       mergeMap((userCreated) => this._users$.pipe(
         take(1),
@@ -68,13 +73,13 @@ export class UserService {
   }
 
   updateUserById(id:number, usuarioActualizado:UpdateUserData):void{
-    this.httpClient.put('http://localhost:3000/users/' + id, usuarioActualizado).subscribe({
+    this.httpClient.put(environment.baseApiUrl + '/users/' + id, usuarioActualizado).subscribe({
       next: () => this.loadUsers(),
     })
   }
 
   deleteUserById(id:number):void{ 
-    this.httpClient.delete('http://localhost:3000/users/' + id)
+    this.httpClient.delete(environment.baseApiUrl + '/users/' + id)
     .pipe()
     .subscribe({
       next: (arrayActualizado) => this.loadUsers(),
