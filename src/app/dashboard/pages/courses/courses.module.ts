@@ -21,7 +21,7 @@ import { CoursesRoutingModule } from './courses-routing.module';
     CommonModule,
     SharedModule,
     RouterModule,
-    CoursesRoutingModule
+    CoursesRoutingModule,
   ],
   exports:[
     CoursesComponent

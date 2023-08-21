@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Student } from '../../../students/models';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NotifierService } from 'src/app/core/services/notifier.service';
@@ -10,7 +10,7 @@ import { CourseService } from '../../course.service';
   templateUrl: './course-detail.component.html',
   styleUrls: ['./course-detail.component.scss']
 })
-export class CourseDetailComponent {
+export class CourseDetailComponent implements OnInit {
 
   public course: Course | undefined;
   public courseId?: number;
@@ -21,7 +21,9 @@ export class CourseDetailComponent {
     private router: Router,
     private notification: NotifierService,
     private courseService: CourseService,
-  ) {}
+  ) {
+    
+  }
 
   ngOnInit(): void {
     this.courseId = +this.activatedRoute.snapshot.params['id'];

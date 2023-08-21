@@ -2,6 +2,7 @@ export interface Student{
     id: number,
     name: string,
     surname: string,
+    courseId: number,
     turno: string,
 }
 

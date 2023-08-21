@@ -40,7 +40,7 @@ describe('LoginComponent', () =>{
     it('Al llamar login() y el formulario SI ES VALIDO, debe haberse llamado el metodo login del AuthService', () => {
         const authService = TestBed.inject(AuthService);
     
-        component.emailControl.setValue('fake@mail.com');
+        component.emailControl.setValue('fakemail@fake.com');
         component.passwordControl.setValue('123456');
     
         expect(component.loginForm.valid).toBeTrue();
