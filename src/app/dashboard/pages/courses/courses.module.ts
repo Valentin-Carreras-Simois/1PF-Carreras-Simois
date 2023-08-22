@@ -9,12 +9,16 @@ import { CoursesEffects } from './store/courses.effects';
 import { StoreModule } from '@ngrx/store';
 import { coursesFeature } from './store/courses.reducer';
 import { CourseDetailComponent } from './pages/course-detail/course-detail.component';
+import { CoursesFormDialogComponent } from './components/courses-form-dialog/courses-form-dialog.component';
+import { CoursesTableComponent } from './components/courses-table/courses-table.component';
 
 
 @NgModule({
   declarations: [
     CoursesComponent,
-    CourseDetailComponent
+    CourseDetailComponent,
+    CoursesFormDialogComponent,
+    CoursesTableComponent
   ],
   imports: [
     CommonModule,
@@ -23,7 +27,7 @@ import { CourseDetailComponent } from './pages/course-detail/course-detail.compo
     RouterModule,
     StoreModule.forFeature(coursesFeature),
     EffectsModule.forFeature([CoursesEffects])
-
-  ]
+  ],
+  exports: [CoursesComponent]
 })
 export class CoursesModule { }
