@@ -20,7 +20,7 @@ export class CoursesFormDialogComponent {
   courseForm= new FormGroup({
     name: this.nameControl,
     modality: this.modalityControl,
-    proffesor: this.proffessorControl,
+    proffessor: this.proffessorControl,
   });
 
   constructor(
@@ -40,7 +40,10 @@ export class CoursesFormDialogComponent {
     if (this.courseForm.invalid) {
       this.courseForm.markAllAsTouched();
     } else {
-      this.dialogRef.close(this.courseForm.value);
+      const payload: any = {
+        ...this.courseForm.value
+      }
+      this.dialogRef.close(payload);
     }
   }
 }

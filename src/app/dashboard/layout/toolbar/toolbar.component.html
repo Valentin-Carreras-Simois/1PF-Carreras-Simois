@@ -8,7 +8,7 @@
     </div>
 
 
-    <p *ngIf="authUser$ | async; let authUser" >
+    <p class="pt-2" *ngIf="authUser$ | async; let authUser" >
         {{ (authUser$ | async)?.name }} {{ (authUser$ | async)?.surname }}
     </p>
 </mat-toolbar>

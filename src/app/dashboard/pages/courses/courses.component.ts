@@ -21,7 +21,7 @@ export class CoursesComponent {
 
   constructor(
     private matDialog: MatDialog,
-    private courseService: CourseService ,
+    private courseService: CourseService,
     private notifier: NotifierService,
     private store: Store,
     ){
