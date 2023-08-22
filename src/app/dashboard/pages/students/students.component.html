@@ -1,7 +1,7 @@
 <h1>Alumnos</h1>
 
 <div class="mb-5">
-    <button (click)="onCreateStudent()" mat-raised-button color="primary" type="button">
+    <button [disabled]="!(isAdmin$ | async)" (click)="onCreateStudent()" mat-raised-button color="primary" type="button">
         <mat-icon>add</mat-icon>
         Añadir Alumno
     </button>

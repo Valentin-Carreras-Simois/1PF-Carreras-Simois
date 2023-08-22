@@ -6,10 +6,19 @@
       "surname": "User",
       "email": "fakemail@fake.com",
       "password": "123456",
-      "token": "asdfgklñ11"
+      "token": "asdfgklñ11",
+      "role": "ADMINISTRADOR"
+    },
+    {
+      "name": "VALENTIN",
+      "surname": "CARRERAS",
+      "email": "valentincarrerasimois@gmail.com",
+      "password": "ASDASD",
+      "role": "USUARIO",
+      "token": "vj0Zd8fxVL",
+      "id": 2
     }
   ],
-
   "students": [
     {
       "id": 1,
@@ -47,7 +56,6 @@
       "classId": 3
     }
   ],
-
   "courses": [
     {
       "id": 1,

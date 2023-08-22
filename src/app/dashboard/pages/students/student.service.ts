@@ -4,7 +4,6 @@ import { BehaviorSubject, Observable, map, mergeMap, take } from 'rxjs';
 import { NotifierService } from 'src/app/core/services/notifier.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { Course } from '../courses/models';
 
 @Injectable({
   providedIn: 'root'

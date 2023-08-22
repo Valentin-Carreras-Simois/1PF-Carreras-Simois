@@ -11,6 +11,7 @@ import { MatTableModule } from '@angular/material/table';
 import { FullNamePipe } from './pipes/full-name.pipe';
 import { ControlErrorMessagePipe } from './pipes/control-error-message.pipe';
 import { ResaltadoDirective } from './directives/resaltado.directive';
+import { MatSelectModule } from '@angular/material/select'
 
 
 @NgModule({
@@ -33,8 +34,8 @@ import { ResaltadoDirective } from './directives/resaltado.directive';
     MatTableModule,
     FullNamePipe,
     ControlErrorMessagePipe,
-    ResaltadoDirective
-
+    ResaltadoDirective,
+    MatSelectModule
   ]
 })
 export class SharedModule { }
