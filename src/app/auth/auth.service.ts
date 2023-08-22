@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { LoginPayload } from './models';
-import { BehaviorSubject, Observable, map, take } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { User } from '../dashboard/pages/users/models';
 import { NotifierService } from '../core/services/notifier.service';
 import { Router } from '@angular/router';
@@ -12,8 +12,9 @@ import { selectAuthUser } from '../store/auth/auth.selector';
 
 
 @Injectable({
-  providedIn: 'root'
-})
+  providedIn: 'root'})
+
+  
 export class AuthService {
 
   public authUsers$ = this.store.select(selectAuthUser);

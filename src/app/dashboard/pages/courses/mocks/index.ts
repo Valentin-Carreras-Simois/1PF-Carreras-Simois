@@ -1,16 +1,22 @@
 import { Course } from "../models";
 
-export const COURSES_MOCK: Course[] = [
+export const COURSE_MOCK: Course[] = [
+    {
+        id: 1,
+        name: 'ReactJs',
+        modality: 'Virtual',
+        proffessor: 'Julian Alvarez'
+    },
     {
         id: 2,
-        name: 'Curso de Desarrollo Web',
-        modality: 'Mixto',
-        proffessor:'Lautaro Martinez'
+        name: 'Angular',
+        modality: 'Virtual',
+        proffessor: 'Lionel Messi'
     },
     {
         id: 3,
-        name: 'Curso de Javascript',
-        modality: 'Mixto',
-        proffessor:'Lisandro Martinez'
+        name: 'Marketing',
+        modality: 'Presencial',
+        proffessor: 'Jorge Sampaoli'
     }
 ]

@@ -1,50 +1,37 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { StudentService } from '../../../students/student.service';
 import { Student } from '../../../students/models';
-import { ActivatedRoute, Router } from '@angular/router';
-import { NotifierService } from 'src/app/core/services/notifier.service';
-import { Course } from '../../models';
-import { CourseService } from '../../course.service';
+import { Store } from '@ngrx/store';
+import { CoursesActions } from '../../store/courses.actions';
+import { Observable } from 'rxjs';
+import { selectCourseName } from '../../store/courses.selectors';
 
 @Component({
   selector: 'app-course-detail',
   templateUrl: './course-detail.component.html',
-  styleUrls: ['./course-detail.component.scss']
+  styles: [
+  ]
 })
 export class CourseDetailComponent implements OnInit {
 
-  public course: Course | undefined;
-  public courseId?: number;
-  notifierService: any;
+  displayedColumns = ['id', 'name', 'surname', 'turno'];
+  students: Student[] = [];
+  courseName$: Observable<string | undefined>;
+
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private router: Router,
-    private notification: NotifierService,
-    private courseService: CourseService,
-  ) {
-    
+    private studentService: StudentService,
+    private store: Store
+    ){
+    this.activatedRoute.snapshot.params;
+    this.courseName$ = this.store.select(selectCourseName);
   }
-
   ngOnInit(): void {
-    this.courseId = +this.activatedRoute.snapshot.params['id'];
-    this.loadCourse();
-  }
-
-  loadCourse(): void {
-    if (this.courseId) {
-      this.courseService.getCourseById(this.courseId).subscribe({
-        next: (course) => {
-          if (course) {
-            this.course = course;
-          } else {
-            this.notification.showError('Curso no encontrado', 'Error');
-            this.router.navigate(['/dashboard/users']);
-          }
-        },
-        error: (error) => {
-          console.error('Error al cargar el curso: ', error);
-        }
-      });
-    }
+    this.store.dispatch(CoursesActions.loadCourseDetail({ classId: this.activatedRoute.snapshot.params['id']}))
+    this.studentService.getStudentsbyClassId(this.activatedRoute.snapshot.params['id']).subscribe({
+      next: (students) =>(this.students = students)
+    })
   }
 }

@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { CreateStudentData, Student, UpdateStudentData } from './models';
-import { BehaviorSubject, Observable, Subject, delay, map, mergeMap, of, take } from 'rxjs';
+import { BehaviorSubject, Observable, map, mergeMap, take } from 'rxjs';
 import { NotifierService } from 'src/app/core/services/notifier.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { Course } from '../courses/models';
 
 @Injectable({
   providedIn: 'root'
@@ -81,5 +82,9 @@ export class StudentService {
     .subscribe({
       next: (arrayActualizado) => this.loadStudents(),
     })
+  }
+
+  getStudentsbyClassId(classId:number): Observable<Student[]>{
+    return this.httpClient.get<Student[]>(environment.baseApiUrl + `/students?classId=${classId}`)
   }
 }

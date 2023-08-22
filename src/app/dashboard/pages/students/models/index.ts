@@ -2,7 +2,7 @@ export interface Student{
     id: number,
     name: string,
     surname: string,
-    courseId: number,
+    classId: number,
     turno: string,
 }
 

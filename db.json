@@ -9,26 +9,63 @@
       "token": "asdfgklñ11"
     }
   ],
+
+  "students": [
+    {
+      "id": 1,
+      "name": "Enzo",
+      "surname": "Fernandez",
+      "turno": "Tarde",
+      "classId": 1
+    },
+    {
+      "name": "Valentin",
+      "surname": "Simois",
+      "turno": "Mañana",
+      "id": 2,
+      "classId": 1
+    },
+    {
+      "name": "Nahuel",
+      "surname": "Molina",
+      "turno": "Tarde",
+      "id": 3,
+      "classId": 2
+    },
+    {
+      "name": "Angel",
+      "surname": "Di Maria",
+      "turno": "Tarde",
+      "id": 4,
+      "classId": 2
+    },
+    {
+      "name": "Leandro",
+      "surname": "Paredes",
+      "turno": "Mañana",
+      "id": 5,
+      "classId": 3
+    }
+  ],
+
   "courses": [
     {
       "id": 1,
       "name": "Curso de Angular",
       "modality": "Virtual",
       "proffessor": "Lionel Messi"
-    }
-  ],
-  "students": [
-    {
-      "id": 1,
-      "name": "Enzo",
-      "surname": "Fernandez",
-      "turno": "Tarde"
     },
     {
-      "name": "Valentin",
-      "surname": "dsvvsv",
-      "turno": "mañana",
+      "name": "Curso de React",
+      "modality": "Virtual",
+      "proffessor": "Julian Alvarez",
       "id": 2
+    },
+    {
+      "name": "Curso de Marketing",
+      "modality": "Presencial",
+      "proffessor": "Jorge Sampaoli",
+      "id": 3
     }
   ]
 }

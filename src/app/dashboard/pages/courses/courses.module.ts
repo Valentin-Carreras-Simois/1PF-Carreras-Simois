@@ -1,30 +1,29 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { CoursesRoutingModule } from './courses-routing.module';
 import { CoursesComponent } from './courses.component';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { CoursesFormDialogComponent } from './components/courses-form-dialog/courses-form-dialog.component';
 import { RouterModule } from '@angular/router';
-import { CoursesTableComponent } from './components/courses-table/courses-table.component';
+import { EffectsModule } from '@ngrx/effects';
+import { CoursesEffects } from './store/courses.effects';
+import { StoreModule } from '@ngrx/store';
+import { coursesFeature } from './store/courses.reducer';
 import { CourseDetailComponent } from './pages/course-detail/course-detail.component';
-import { CoursesRoutingModule } from './courses-routing.module';
-
 
 
 @NgModule({
   declarations: [
     CoursesComponent,
-    CoursesFormDialogComponent,
-    CoursesTableComponent,
     CourseDetailComponent
   ],
   imports: [
     CommonModule,
+    CoursesRoutingModule,
     SharedModule,
     RouterModule,
-    CoursesRoutingModule,
-  ],
-  exports:[
-    CoursesComponent
+    StoreModule.forFeature(coursesFeature),
+    EffectsModule.forFeature([CoursesEffects])
+
   ]
 })
 export class CoursesModule { }

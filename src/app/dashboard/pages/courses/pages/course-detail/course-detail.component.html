@@ -1,22 +1,28 @@
-<button routerLink=".." mat-icon-button>
-    <mat-icon>arrow_back</mat-icon>
-</button>
+<h1>Detalle del curso: {{courseName$ | async}}</h1>
+<h2>Alumnos Inscriptos:</h2>
 
-<mat-card>
-  <mat-card-content>
-    <div *ngIf="course">
-      <h2>Detalles del Curso</h2>
-      <p><strong>Nombre:</strong> {{ course.name }}</p>
-      <p><strong>Modalidad:</strong> {{ course.modality }}</p>
-      <p><strong>Profesor:</strong> {{ course.proffessor }}</p>
-    </div>
-  </mat-card-content>
-</mat-card>
+<table mat-table [dataSource]="students" class="border border-light-subtle mat-elevation-z8">
 
-<mat-card>
-  <mat-card-content>
-    <div *ngIf="!course">
-      Usuario no encontrado!
-    </div>
-  </mat-card-content>
-</mat-card>
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef><span appResaltado>ID</span></th>
+      <td mat-cell *matCellDef="let students"> {{students.id}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef><span appResaltado>Nombre</span></th>
+        <td mat-cell *matCellDef="let students"> {{students.name}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="surname">
+      <th mat-header-cell *matHeaderCellDef><span appResaltado>Apellido</span></th>
+      <td mat-cell *matCellDef="let students"> {{students.surname}} </td>
+  </ng-container>
+    
+    <ng-container matColumnDef="turno">
+        <th mat-header-cell *matHeaderCellDef><span appResaltado>Turno</span></th>
+        <td mat-cell *matCellDef="let students"> {{students.turno}}</td>
+    </ng-container>
+  
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
