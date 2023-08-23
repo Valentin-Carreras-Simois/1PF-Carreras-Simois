@@ -59,21 +59,59 @@
   "courses": [
     {
       "id": 1,
-      "name": "Curso de Angular",
+      "name": "Angular",
       "modality": "Virtual",
       "proffessor": "Lionel Messi"
     },
     {
-      "name": "Curso de React",
+      "name": "React",
       "modality": "Virtual",
       "proffessor": "Julian Alvarez",
       "id": 2
     },
     {
-      "name": "Curso de Marketing",
+      "name": "Marketing",
       "modality": "Presencial",
       "proffessor": "Jorge Sampaoli",
       "id": 3
+    }
+  ],
+  "classrooms": [
+    {
+      "id": 1,
+      "studentId": 1,
+      "courseId": 2,
+      "type": "B"
+    },
+    {
+      "id": 2,
+      "studentId": 2,
+      "courseId": 2,
+      "type": "A"
+    },
+    {
+      "id": 3,
+      "studentId": 3,
+      "courseId": 1,
+      "type": "B"
+    },
+    {
+      "id": 4,
+      "studentId": 4,
+      "courseId": 1,
+      "type": "B"
+    },
+    {
+      "id": 5,
+      "studentId": 5,
+      "courseId": 3,
+      "type": "A"
+    },
+    {
+      "courseId": 1,
+      "studentId": 2,
+      "type": "B",
+      "id": 6
     }
   ]
 }

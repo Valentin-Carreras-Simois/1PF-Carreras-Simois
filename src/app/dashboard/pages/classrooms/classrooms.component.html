@@ -1,0 +1,34 @@
+<h1>Inscripciones</h1>
+
+<div class="mb-3">
+  <button (click)="onAdd()" mat-flat-button color="primary" type="button">
+    <mat-icon>add</mat-icon>
+    Nueva Inscripcion
+  </button>
+</div>
+
+<table mat-table [dataSource]="(classrooms$ | async) || []" class="mat-elevation-z8">
+
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef>ID</th>
+    <td mat-cell *matCellDef="let classroom">{{ classroom.id }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="student">
+    <th mat-header-cell *matHeaderCellDef>Alumno</th>
+    <td mat-cell *matCellDef="let classroom">{{ !!classroom.student ? classroom.student.name + ' ' + classroom.student.surname : '-' }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="course">
+    <th mat-header-cell *matHeaderCellDef>Curso</th>
+    <td mat-cell *matCellDef="let classroom">{{ classroom.course.name | uppercase}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="type">
+    <th mat-header-cell *matHeaderCellDef>Comision</th>
+    <td mat-cell *matCellDef="let classroom">{{ classroom.type}}</td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>

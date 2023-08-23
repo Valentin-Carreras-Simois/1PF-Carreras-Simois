@@ -25,6 +25,10 @@ import { adminGuard } from "../core/guards/admin.guard";
                 loadChildren: () => import('./pages/students/students.module').then((m) => m.StudentsModule),
             },
             {
+                path: 'classrooms',
+                loadChildren: () => import('./pages/classrooms/classrooms.module').then((m) => m.ClassroomsModule),
+            },
+            {
                 path: '**',
                 redirectTo: 'home',
             }
