@@ -1,19 +1,19 @@
 {
   "users": [
     {
-      "id": 1,
-      "name": "Fake",
-      "surname": "User",
-      "email": "fakemail@fake.com",
+      "name": "FAKE",
+      "surname": "ADMIN",
+      "email": "fakeadmin@fake.com",
       "password": "123456",
+      "role": "ADMINISTRADOR",
       "token": "asdfgklñ11",
-      "role": "ADMINISTRADOR"
+      "id": 1
     },
     {
-      "name": "VALENTIN",
-      "surname": "CARRERAS",
-      "email": "valentincarrerasimois@gmail.com",
-      "password": "ASDASD",
+      "name": "FAKE",
+      "surname": "USER",
+      "email": "fakeuser@fake.com",
+      "password": "123456",
       "role": "USUARIO",
       "token": "vj0Zd8fxVL",
       "id": 2
