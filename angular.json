@@ -61,6 +61,14 @@
           },
           "defaultConfiguration": "production"
         },
+        "deploy": {
+          "builder": "angular-cli-ghpages:deploy",
+          "options": {
+            "baseHref": "/PF-Carreras-Simois/",
+            "name": "angular-material",
+            "repo": "https://github.com/Valentin-Carreras-Simois/PF-Carreras-Simois.git"
+          }
+        },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
