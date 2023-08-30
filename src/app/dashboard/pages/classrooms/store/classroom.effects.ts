@@ -75,7 +75,17 @@ export class ClassroomEffects {
     );
   }, { dispatch: false});
 
-
+  deleteClassroom$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(ClassroomActions.deleteClassroom),
+      concatMap(action =>
+        this.deleteClassroomFromDB(action.id).pipe(
+          map(() => ClassroomActions.deleteClassroomSuccess({ id: action.id })),
+          catchError(error => of(ClassroomActions.deleteClassroomFailure({ error })))
+        )
+      )
+    );
+  });
 
 
   constructor(private actions$: Actions, private httpClient:HttpClient, private store: Store) {}
@@ -94,5 +104,10 @@ export class ClassroomEffects {
 
   private createClassrooms(payload: CreateClassroomPayload): Observable<Classroom>{
     return this.httpClient.post<Classroom>(environment.baseApiUrl + '/classrooms', payload)
+  }
+
+  private deleteClassroomFromDB(id: number): Observable<void> {
+    const url = `${environment.baseApiUrl}/classrooms/${id}`;
+    return this.httpClient.delete<void>(url);
   }
 }

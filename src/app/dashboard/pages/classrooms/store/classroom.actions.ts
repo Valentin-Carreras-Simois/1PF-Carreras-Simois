@@ -21,6 +21,10 @@ export const ClassroomActions = createActionGroup({
 
     'Create Classrooms': props<{payload: CreateClassroomPayload}>(),
     'Create Classrooms Success': props<{ data: Classroom }>(),
-    'Create Classrooms Failure': props<{ error: HttpErrorResponse }>()
+    'Create Classrooms Failure': props<{ error: HttpErrorResponse }>(),
+    
+    'Delete Classroom': props<{ id: number }>(),
+    'Delete Classroom Success': props<{ id: number }>(),
+    'Delete Classroom Failure': props<{ error: HttpErrorResponse }>()
   }
 });

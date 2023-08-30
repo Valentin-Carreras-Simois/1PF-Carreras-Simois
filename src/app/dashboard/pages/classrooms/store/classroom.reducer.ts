@@ -64,6 +64,21 @@ export const reducer = createReducer(
     }
   }),
 
+  on(ClassroomActions.deleteClassroomSuccess, (state, action) => {
+    const updatedData = state.data.filter(classroom => classroom.id !== action.id);
+    return {
+      ...state,
+      data: updatedData
+    };
+  }),
+
+  on(ClassroomActions.deleteClassroomFailure, (state, action) => {
+    return {
+      ...state,
+      error: action.error
+    };
+  }),
+
 );
 
 export const classroomFeature = createFeature({

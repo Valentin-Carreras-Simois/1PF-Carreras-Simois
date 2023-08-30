@@ -74,6 +74,12 @@
       "modality": "Presencial",
       "proffessor": "Jorge Sampaoli",
       "id": 3
+    },
+    {
+      "name": "Javascript",
+      "modality": "Virtual",
+      "proffessor": "Lionel Scaloni",
+      "id": 4
     }
   ],
   "classrooms": [
@@ -108,9 +114,9 @@
       "type": "A"
     },
     {
-      "courseId": 1,
-      "studentId": 2,
-      "type": "B",
+      "courseId": 4,
+      "studentId": 3,
+      "type": "A",
       "id": 6
     }
   ]

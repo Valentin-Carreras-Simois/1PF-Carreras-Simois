@@ -8,3 +8,5 @@ export const selectAuthUser = createSelector(selectAuthState, (state) => state.a
 export const selectAuthUserRole = createSelector(selectAuthState, (state) => state.authUser?.role);
 
 export const selectIsAdmin = createSelector(selectAuthState, (state) => state.authUser?.role === 'ADMINISTRADOR')
+
+export const selectIsUser = createSelector(selectAuthState, (state) => state.authUser?.role === 'USUARIO')
